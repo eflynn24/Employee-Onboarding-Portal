@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Help Desk - Employee Request Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info {
+            text-align: right;
+            color: #666;
+        }
+
+        .user-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-option {
+            display: none;
+        }
+
+        .category-option input[type="radio"] {
+            display: none;
+        }
+
+        .category-label {
+            display: block;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .category-option input[type="radio"]:checked + .category-label {
+            border-color: #667eea;
+            background: #e7f0ff;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .category-label:hover {
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button.btn {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        button.btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        button.btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button.btn-secondary {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+
+        button.btn-secondary:hover {
+            background-color: #dee2e6;
+        }
+
+        .routing-info {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 3px;
+            margin-top: 15px;
+            display: none;
+            font-size: 13px;
+        }
+
+        .routing-info.show {
+            display: block;
+        }
+
+        .routing-info strong {
+            color: #667eea;
+        }
+
+        .ticket-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .ticket-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .ticket-id {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 13px;
+        }
+
+        .ticket-category {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .category-address {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .category-employment {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .category-contract {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .category-benefits {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .ticket-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .ticket-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .status-open {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-in-progress {
+            background: #cce5ff;
+            color: #0056b3;
+        }
+
+        .status-resolved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .ticket-meta {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+
+        .routing-details {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 3px;
+            margin-top: 10px;
+            font-size: 12px;
+            border-left: 3px solid #667eea;
+        }
+
+        .routing-details strong {
+            color: #667eea;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .success-banner {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-banner.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal-body {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+        }
+
+        .close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 20px;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .info-banner {
+            background: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .info-banner strong {
+            color: #667eea;
+        }
+    </style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_ApprovalStatus msdt:dt="string">0</mso:_ApprovalStatus>
+<mso:_ApprovalAssignedTo msdt:dt="string"></mso:_ApprovalAssignedTo>
+<mso:_ApprovalRespondedBy msdt:dt="string"></mso:_ApprovalRespondedBy>
+<mso:_ApprovalSentBy msdt:dt="string"></mso:_ApprovalSentBy>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎫 HR Help Desk Portal</h1>
+            <div class="user-info">
+                <p><strong id="employeeName">Employee</strong></p>
+                <p id="employeeId" style="font-size: 12px; color: #999;"></p>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Left Column: Submit Request -->
+            <div class="card">
+                <div class="card-header">
+                    ✍️ Submit New Request
+                </div>
+                <div class="card-content">
+                    <div class="info-banner">
+                        <strong>💡 Tip:</strong> Your request will be automatically routed to the appropriate HR specialist based on the category you select.
+                    </div>
+
+                    <form id="requestForm" onsubmit="handleSubmitRequest(event)">
+                        <div class="form-group">
+                            <label>Your Name *</label>
+                            <input type="text" id="requesterName" placeholder="Full Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <input type="email" id="requesterEmail" placeholder="your.email@company.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Request Category *</label>
+                            <div class="category-grid">
+                                <div class="category-option">
+                                    <input type="radio" id="cat-address" name="category" value="Address Change" onchange="updateRoutingInfo()">
+                                    <label for="cat-address" class="category-label">📍 Address Change</label>
+                                </div>
+                                <div class="category-option">
+                                    <input type="radio" id="cat-employment" name="category" value="Employment Verification" onchange="updateRoutingInfo()">
+                                    <label for="cat-employment" class="category-label">📄 Employment Verification</label>
+                                </div>
+                                <div class="category-option">
+                                    <input type="radio" id="cat-contract" name="category" value="Contract Questions" onchange="updateRoutingInfo()">
+                                    <label for="cat-contract" class="category-label">📋 Contract Questions</label>
+                                </div>
+                                <div class="category-option">
+                                    <input type="radio" id="cat-benefits" name="category" value="Benefits Questions" onchange="updateRoutingInfo()">
+                                    <label for="cat-benefits" class="category-label">🏥 Benefits Questions</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Subject *</label>
+                            <input type="text" id="subject" placeholder="Brief subject of your request" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description *</label>
+                            <textarea id="description" placeholder="Please provide details about your request..." required></textarea>
+                        </div>
+
+                        <div class="routing-info" id="routingInfo">
+                            <div id="routingContent"></div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="submit" class="btn btn-primary">Submit Request</button>
+                            <button type="reset" class="btn btn-secondary">Clear Form</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column: Request Tickets -->
+            <div class="card">
+                <div class="card-header">
+                    📊 Your Requests
+                </div>
+                <div class="card-content">
+                    <div class="success-banner" id="successBanner">
+                        ✓ Your request has been submitted successfully!
+                    </div>
+
+                    <div class="stats-grid" id="statsGrid" style="display: none;">
+                        <div class="stat-card">
+                            <h3 id="totalTickets">0</h3>
+                            <p>Total Requests</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="openTickets">0</h3>
+                            <p>Open</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="inProgressTickets">0</h3>
+                            <p>In Progress</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="resolvedTickets">0</h3>
+                            <p>Resolved</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterTickets('all')">All</button>
+                        <button class="filter-btn" onclick="filterTickets('open')">Open</button>
+                        <button class="filter-btn" onclick="filterTickets('in-progress')">In Progress</button>
+                        <button class="filter-btn" onclick="filterTickets('resolved')">Resolved</button>
+                    </div>
+
+                    <div id="ticketsContainer">
+                        <div class="empty-state">
+                            <p>No requests submitted yet.</p>
+                            <p style="font-size: 12px; color: #bbb;">Submit a request above to get started.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ticket Detail Modal -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTicketModal()">&times;</span>
+            <div class="modal-header">Request Details</div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeTicketModal()" style="flex: 1;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Routing Rules
+        const routingRules = {
+            'Address Change': {
+                department: 'HR - Employee Records',
+                specialist: 'Sarah Chen',
+                email: 'schen@company.com',
+                description: 'Handles address and personal information updates'
+            },
+            'Employment Verification': {
+                department: 'HR - Compliance & Records',
+                specialist: 'Michael Rodriguez',
+                email: 'mrodriguez@company.com',
+                description: 'Processes employment verification requests'
+            },
+            'Contract Questions': {
+                department: 'HR - Legal & Contracts',
+                specialist: 'Jennifer Lee',
+                email: 'jlee@company.com',
+                description: 'Answers contract-related inquiries'
+            },
+            'Benefits Questions': {
+                department: 'HR - Benefits Administration',
+                specialist: 'David Johnson',
+                email: 'djohnson@company.com',
+                description: 'Manages benefits-related questions'
+            }
+        };
+
+        const categoryColors = {
+            'Address Change': 'category-address',
+            'Employment Verification': 'category-employment',
+            'Contract Questions': 'category-contract',
+            'Benefits Questions': 'category-benefits'
+        };
+
+        const statusColors = {
+            'Open': 'status-open',
+            'In Progress': 'status-in-progress',
+            'Resolved': 'status-resolved'
+        };
+
+        let currentFilter = 'all';
+        let tickets = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            setEmployeeName();
+            displayTickets();
+        });
+
+        // Set employee name from localStorage or generate
+        function setEmployeeName() {
+            const name = localStorage.getItem('employeeName') || 'Employee';
+            const id = localStorage.getItem('employeeId') || 'EMP-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            
+            document.getElementById('employeeName').textContent = name;
+            document.getElementById('employeeId').textContent = 'ID: ' + id;
+            
+            localStorage.setItem('employeeId', id);
+        }
+
+        // Update routing info based on selected category
+        function updateRoutingInfo() {
+            const selectedCategory = document.querySelector('input[name="category"]:checked');
+            if (selectedCategory) {
+                const category = selectedCategory.value;
+                const routing = routingRules[category];
+                
+                let html = `<strong>🎯 Auto-Routing Information:</strong><br>`;
+                html += `<strong>Department:</strong> ${routing.department}<br>`;
+                html += `<strong>Specialist:</strong> ${routing.specialist}<br>`;
+                html += `<strong>Email:</strong> ${routing.email}<br>`;
+                html += `<em>${routing.description}</em>`;
+                
+                document.getElementById('routingContent').innerHTML = html;
+                document.getElementById('routingInfo').classList.add('show');
+            }
+        }
+
+        // Handle form submission
+        function handleSubmitRequest(event) {
+            event.preventDefault();
+
+            const category = document.querySelector('input[name="category"]:checked').value;
+            const routing = routingRules[category];
+
+            const ticket = {
+                id: 'TKT-' + Date.now(),
+                requesterName: document.getElementById('requesterName').value,
+                requesterEmail: document.getElementById('requesterEmail').value,
+                category: category,
+                subject: document.getElementById('subject').value,
+                description: document.getElementById('description').value,
+                status: 'Open',
+                assignedTo: routing.specialist,
+                assignedDept: routing.department,
+                priority: 'Normal',
+                createdDate: new Date().toLocaleString(),
+                updatedDate: new Date().toLocaleString(),
+                notes: []
+            };
+
+            tickets.push(ticket);
+            saveData();
+            
+            // Show success banner
+            const banner = document.getElementById('successBanner');
+            banner.classList.add('show');
+            setTimeout(() => banner.classList.remove('show'), 4000);
+
+            // Reset form
+            event.target.reset();
+            document.getElementById('routingInfo').classList.remove('show');
+
+            // Refresh display
+            displayTickets();
+            document.getElementById('statsGrid').style.display = 'grid';
+        }
+
+        // Display tickets
+        function displayTickets() {
+            const container = document.getElementById('ticketsContainer');
+            const filtered = tickets.filter(ticket => {
+                if (currentFilter === 'all') return true;
+                return ticket.status.toLowerCase().replace(' ', '-') === currentFilter;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>No requests found.</p></div>';
+                updateStats();
+                return;
+            }
+
+            container.innerHTML = filtered.map(ticket => `
+                <div class="ticket-item" onclick="showTicketDetails('${ticket.id}')">
+                    <div class="ticket-header">
+                        <span class="ticket-id">${ticket.id}</span>
+                        <span class="ticket-category ${categoryColors[ticket.category]}">${ticket.category}</span>
+                    </div>
+                    <div class="ticket-title">${ticket.subject}</div>
+                    <div>
+                        <span class="ticket-status ${statusColors[ticket.status]}">${ticket.status}</span>
+                    </div>
+                    <div class="routing-details">
+                        <strong>📍 Routed to:</strong> ${ticket.assignedTo} (${ticket.assignedDept})
+                    </div>
+                    <div class="ticket-meta">
+                        <strong>Submitted:</strong> ${ticket.createdDate}
+                    </div>
+                </div>
+            `).join('');
+
+            updateStats();
+        }
+
+        // Filter tickets
+        function filterTickets(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            displayTickets();
+        }
+
+        // Show ticket details
+        function showTicketDetails(ticketId) {
+            const ticket = tickets.find(t => t.id === ticketId);
+            if (!ticket) return;
+
+            const html = `
+                <div style="margin-bottom: 15px;">
+                    <p><strong>Ticket ID:</strong> ${ticket.id}</p>
+                    <p><strong>Status:</strong> <span class="ticket-status ${statusColors[ticket.status]}">${ticket.status}</span></p>
+                    <p><strong>Category:</strong> <span class="ticket-category ${categoryColors[ticket.category]}">${ticket.category}</span></p>
+                </div>
+                <div style="margin-bottom: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+                    <p><strong>Subject:</strong> ${ticket.subject}</p>
+                    <p><strong>Description:</strong> ${ticket.description}</p>
+                </div>
+                <div style="margin-bottom: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+                    <p><strong>Assigned To:</strong> ${ticket.assignedTo}</p>
+                    <p><strong>Department:</strong> ${ticket.assignedDept}</p>
+                </div>
+                <div style="border-top: 1px solid #eee; padding-top: 15px;">
+                    <p><strong>Created:</strong> ${ticket.createdDate}</p>
+                    <p><strong>Last Updated:</strong> ${ticket.updatedDate}</p>
+                </div>
+            `;
+
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('ticketModal').classList.add('show');
+        }
+
+        // Close modal
+        function closeTicketModal() {
+            document.getElementById('ticketModal').classList.remove('show');
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = tickets.length;
+            const open = tickets.filter(t => t.status === 'Open').length;
+            const inProgress = tickets.filter(t => t.status === 'In Progress').length;
+            const resolved = tickets.filter(t => t.status === 'Resolved').length;
+
+            document.getElementById('totalTickets').textContent = total;
+            document.getElementById('openTickets').textContent = open;
+            document.getElementById('inProgressTickets').textContent = inProgress;
+            document.getElementById('resolvedTickets').textContent = resolved;
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('hrTickets', JSON.stringify(tickets));
+        }
+
+        // Load data from localStorage
+        function loadData() {
+            const stored = localStorage.getItem('hrTickets');
+            if (stored) {
+                tickets = JSON.parse(stored);
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('ticketModal');
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        };
+    </script>
+</body>
+</html>
