@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Onboarding Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            overflow-x: auto;
+        }
+
+        .nav-tabs button {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #495057;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .nav-tabs button:hover {
+            background-color: #e9ecef;
+        }
+
+        .nav-tabs button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .content {
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        button.btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        button.btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        button.btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button.btn-secondary {
+            background-color: #e9ecef;
+            color: #495057;
+            flex: 1;
+        }
+
+        button.btn-secondary:hover {
+            background-color: #dee2e6;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            background-color: #f0f1f3;
+        }
+
+        .checklist-item.completed {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .checklist-item.completed .task-text {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .task-text {
+            flex: 1;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .task-description {
+            font-size: 13px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            transition: width 0.3s ease;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-box {
+            background-color: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+        }
+
+        .info-box h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .info-box p {
+            color: #333;
+            font-size: 14px;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .resource-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .resource-card p {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .resource-card a {
+            display: inline-block;
+            background-color: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 13px;
+            transition: background-color 0.3s ease;
+        }
+
+        .resource-card a:hover {
+            background-color: #764ba2;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .summary-card h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .summary-card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+    </style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_ApprovalStatus msdt:dt="string">0</mso:_ApprovalStatus>
+<mso:_ApprovalAssignedTo msdt:dt="string"></mso:_ApprovalAssignedTo>
+<mso:_ApprovalRespondedBy msdt:dt="string"></mso:_ApprovalRespondedBy>
+<mso:_ApprovalSentBy msdt:dt="string"></mso:_ApprovalSentBy>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Employee Onboarding</h1>
+            <p>Complete your onboarding process and get started with us</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="welcome">Welcome</button>
+            <button class="tab-btn" data-tab="employee-info">Employee Info</button>
+            <button class="tab-btn" data-tab="checklist">Onboarding Checklist</button>
+            <button class="tab-btn" data-tab="resources">Resources</button>
+            <button class="tab-btn" data-tab="summary">Summary</button>
+        </div>
+
+        <div class="content">
+            <!-- Welcome Section -->
+            <section id="welcome" class="section active">
+                <div class="info-box">
+                    <h4>🎉 Welcome to Our Team!</h4>
+                    <p>We're excited to have you join us! This onboarding portal will guide you through the important steps to get started. Please fill out your information and complete all the tasks to ensure a smooth transition.</p>
+                </div>
+
+                <h2 style="margin-bottom: 20px; color: #333;">Getting Started</h2>
+                <div style="color: #666; line-height: 1.8;">
+                    <p><strong>Step 1:</strong> Start by providing your basic employment information on the "Employee Info" tab.</p>
+                    <p style="margin-top: 15px;"><strong>Step 2:</strong> Work through our onboarding checklist to ensure you have everything you need.</p>
+                    <p style="margin-top: 15px;"><strong>Step 3:</strong> Review helpful resources and documentation on the "Resources" tab.</p>
+                    <p style="margin-top: 15px;"><strong>Step 4:</strong> Check your summary to confirm all steps are complete.</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="switchTab('employee-info')">Start Onboarding →</button>
+                </div>
+            </section>
+
+            <!-- Employee Info Section -->
+            <section id="employee-info" class="section">
+                <h2 style="margin-bottom: 20px; color: #333;">Employee Information</h2>
+                <form id="employeeForm" onsubmit="handleEmployeeSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="position">Position *</label>
+                            <input type="text" id="position" name="position" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="department">Department *</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select a department</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="sales">Sales</option>
+                                <option value="hr">Human Resources</option>
+                                <option value="finance">Finance</option>
+                                <option value="operations">Operations</option>
+                                <option value="customer-success">Customer Success</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Start Date *</label>
+                            <input type="date" id="startDate" name="startDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="manager">Manager Name</label>
+                            <input type="text" id="manager" name="manager">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" placeholder="Any additional information you'd like to share..."></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary">Save Information</button>
+                        <button type="button" class="btn btn-secondary" onclick="switchTab('welcome')">← Back</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Onboarding Checklist Section -->
+            <section id="checklist" class="section">
+                <h2 style="margin-bottom: 20px; color: #333;">Onboarding Checklist</h2>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+                </div>
+
+                <div class="info-box">
+                    <h4>📋 Complete Your Onboarding</h4>
+                    <p>Check off each item as you complete it. Your progress will be saved automatically.</p>
+                </div>
+
+                <ul class="checklist" id="checklistItems">
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="welcome-meeting">
+                        <span class="task-text">Welcome Meeting with Manager</span>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="it-setup">
+                        <div>
+                            <span class="task-text">IT Setup & Equipment</span>
+                            <div class="task-description">Laptop, phone, access cards, etc.</div>
+                        </div>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="account-access">
+                        <div>
+                            <span class="task-text">Account Access & Permissions</span>
+                            <div class="task-description">Email, systems, tools, and software</div>
+                        </div>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="tour-facilities">
+                        <div>
+                            <span class="task-text">Office Tour</span>
+                            <div class="task-description">Building orientation and facilities</div>
+                        </div>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="team-intro">
+                        <div>
+                            <span class="task-text">Team Introduction</span>
+                            <div class="task-description">Meet your team members and colleagues</div>
+                        </div>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="hr-paperwork">
+                        <div>
+                            <span class="task-text">HR Paperwork & Benefits</span>
+                            <div class="task-description">Forms, benefits enrollment, policies</div>
+                        </div>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="training-session">
+                        <div>
+                            <span class="task-text">Initial Training Session</span>
+                            <div class="task-description">Company overview and role-specific training</div>
+                        </div>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="policy-review">
+                        <div>
+                            <span class="task-text">Review Company Policies</span>
+                            <div class="task-description">Employee handbook and compliance</div>
+                        </div>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="goal-setting">
+                        <div>
+                            <span class="task-text">30-Day Goals & Expectations</span>
+                            <div class="task-description">Review goals with your manager</div>
+                        </div>
+                    </li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox" data-task="first-week-meeting">
+                        <div>
+                            <span class="task-text">First Week Check-in</span>
+                            <div class="task-description">Follow-up meeting with manager</div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="switchTab('resources')">View Resources →</button>
+                    <button class="btn btn-secondary" onclick="switchTab('employee-info')">← Back</button>
+                </div>
+            </section>
+
+            <!-- Resources Section -->
+            <section id="resources" class="section">
+                <h2 style="margin-bottom: 20px; color: #333;">Onboarding Resources</h2>
+
+                <div class="info-box">
+                    <h4>📚 Helpful Materials</h4>
+                    <p>Here are some resources to help you get started and familiarize yourself with our company.</p>
+                </div>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h3>📖 Employee Handbook</h3>
+                        <p>Complete guide to company policies, procedures, and expectations.</p>
+                        <a href="#" onclick="alert('Employee handbook would be available here'); return false;">Download PDF</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>🏢 Company Overview</h3>
+                        <p>Learn about our mission, values, and organizational structure.</p>
+                        <a href="#" onclick="alert('Company overview presentation would be available here'); return false;">View Presentation</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>👥 Meet the Team</h3>
+                        <p>Directory and profiles of key team members and departments.</p>
+                        <a href="#" onclick="alert('Team directory would be available here'); return false;">View Directory</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>🛠️ Tools & Systems</h3>
+                        <p>Guides and tutorials for company tools and software.</p>
+                        <a href="#" onclick="alert('Tools documentation would be available here'); return false;">View Guides</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>📞 Support & FAQ</h3>
+                        <p>Common questions and how to get help during your onboarding.</p>
+                        <a href="#" onclick="alert('FAQ and support information would be available here'); return false;">Read FAQ</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>🎓 Training Materials</h3>
+                        <p>Role-specific training content and learning resources.</p>
+                        <a href="#" onclick="alert('Training materials would be available here'); return false;">Access Content</a>
+                    </div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="switchTab('summary')">View Summary →</button>
+                    <button class="btn btn-secondary" onclick="switchTab('checklist')">← Back</button>
+                </div>
+            </section>
+
+            <!-- Summary Section -->
+            <section id="summary" class="section">
+                <h2 style="margin-bottom: 20px; color: #333;">Onboarding Summary</h2>
+
+                <div id="employeeSummary" style="display: none;">
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <h3 id="summaryName">-</h3>
+                            <p>Employee Name</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3 id="summaryDepartment">-</h3>
+                            <p>Department</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3 id="summaryChecked">0/10</h3>
+                            <p>Tasks Completed</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3 id="summaryProgress">0%</h3>
+                            <p>Progress</p>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #333; margin-top: 30px; margin-bottom: 15px;">Employee Details</h3>
+                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
+                        <p style="margin-bottom: 10px;"><strong>Email:</strong> <span id="summaryEmail">-</span></p>
+                        <p style="margin-bottom: 10px;"><strong>Phone:</strong> <span id="summaryPhone">-</span></p>
+                        <p style="margin-bottom: 10px;"><strong>Position:</strong> <span id="summaryPosition">-</span></p>
+                        <p style="margin-bottom: 10px;"><strong>Start Date:</strong> <span id="summaryStartDate">-</span></p>
+                        <p style="margin-bottom: 10px;"><strong>Manager:</strong> <span id="summaryManager">-</span></p>
+                    </div>
+
+                    <h3 style="color: #333; margin-top: 30px; margin-bottom: 15px;">Checklist Progress</h3>
+                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="summaryProgressBar" style="width: 0%">0%</div>
+                        </div>
+                        <p style="margin-top: 15px; color: #6c757d;" id="checklistSummaryText">No tasks completed yet</p>
+                    </div>
+                </div>
+
+                <div id="noDataMessage" style="text-align: center; padding: 40px; color: #6c757d;">
+                    <p style="font-size: 16px;">Please complete your employee information first to see your summary.</p>
+                    <button class="btn btn-primary" onclick="switchTab('employee-info')" style="margin-top: 20px; width: auto;">Fill Employee Info</button>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="downloadSummary()" id="downloadBtn" style="display: none;">📥 Download Summary</button>
+                    <button class="btn btn-primary" onclick="printSummary()" id="printBtn" style="display: none;">🖨️ Print Summary</button>
+                    <button class="btn btn-secondary" onclick="switchTab('resources')">← Back</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            setupTabButtons();
+            setupChecklistListeners();
+        });
+
+        // Tab switching
+        function setupTabButtons() {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+        }
+
+        function switchTab(tabName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Show selected section
+            const section = document.getElementById(tabName);
+            if (section) {
+                section.classList.add('active');
+                
+                // Mark button as active
+                const button = document.querySelector(`[data-tab="${tabName}"]`);
+                if (button) button.classList.add('active');
+
+                // Update summary if summary tab
+                if (tabName === 'summary') {
+                    updateSummary();
+                }
+            }
+        }
+
+        // Employee form handling
+        function handleEmployeeSubmit(event) {
+            event.preventDefault();
+            
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                position: document.getElementById('position').value,
+                department: document.getElementById('department').value,
+                startDate: document.getElementById('startDate').value,
+                manager: document.getElementById('manager').value,
+                notes: document.getElementById('notes').value
+            };
+
+            localStorage.setItem('employeeData', JSON.stringify(formData));
+            
+            // Show success message
+            showSuccessMessage();
+            
+            // Optionally move to next tab
+            setTimeout(() => switchTab('checklist'), 500);
+        }
+
+        function showSuccessMessage() {
+            const message = document.querySelector('.success-message') || createSuccessMessage();
+            message.classList.add('show');
+            setTimeout(() => message.classList.remove('show'), 3000);
+        }
+
+        function createSuccessMessage() {
+            const message = document.createElement('div');
+            message.className = 'success-message';
+            message.textContent = '✓ Information saved successfully!';
+            document.querySelector('form').parentElement.insertBefore(message, document.querySelector('form'));
+            return message;
+        }
+
+        // Checklist handling
+        function setupChecklistListeners() {
+            const checkboxes = document.querySelectorAll('.checklist-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const item = this.closest('.checklist-item');
+                    if (this.checked) {
+                        item.classList.add('completed');
+                    } else {
+                        item.classList.remove('completed');
+                    }
+                    saveChecklistProgress();
+                    updateProgress();
+                });
+            });
+        }
+
+        function saveChecklistProgress() {
+            const tasks = {};
+            document.querySelectorAll('.checklist-checkbox').forEach(checkbox => {
+                tasks[checkbox.dataset.task] = checkbox.checked;
+            });
+            localStorage.setItem('checklistProgress', JSON.stringify(tasks));
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checklist-checkbox');
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const percentage = Math.round((checked / total) * 100);
+
+            const progressFill = document.getElementById('progressFill');
+            if (progressFill) {
+                progressFill.style.width = percentage + '%';
+                progressFill.textContent = percentage + '%';
+            }
+        }
+
+        // Load data
+        function loadData() {
+            // Load employee data
+            const employeeData = localStorage.getItem('employeeData');
+            if (employeeData) {
+                const data = JSON.parse(employeeData);
+                document.getElementById('firstName').value = data.firstName || '';
+                document.getElementById('lastName').value = data.lastName || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('phone').value = data.phone || '';
+                document.getElementById('position').value = data.position || '';
+                document.getElementById('department').value = data.department || '';
+                document.getElementById('startDate').value = data.startDate || '';
+                document.getElementById('manager').value = data.manager || '';
+                document.getElementById('notes').value = data.notes || '';
+            }
+
+            // Load checklist progress
+            const checklistProgress = localStorage.getItem('checklistProgress');
+            if (checklistProgress) {
+                const tasks = JSON.parse(checklistProgress);
+                Object.keys(tasks).forEach(taskKey => {
+                    const checkbox = document.querySelector(`[data-task="${taskKey}"]`);
+                    if (checkbox) {
+                        checkbox.checked = tasks[taskKey];
+                        if (tasks[taskKey]) {
+                            checkbox.closest('.checklist-item').classList.add('completed');
+                        }
+                    }
+                });
+            }
+
+            updateProgress();
+        }
+
+        // Summary
+        function updateSummary() {
+            const employeeData = localStorage.getItem('employeeData');
+            
+            if (!employeeData) {
+                document.getElementById('employeeSummary').style.display = 'none';
+                document.getElementById('noDataMessage').style.display = 'block';
+                document.getElementById('downloadBtn').style.display = 'none';
+                document.getElementById('printBtn').style.display = 'none';
+                return;
+            }
+
+            const data = JSON.parse(employeeData);
+            document.getElementById('employeeSummary').style.display = 'block';
+            document.getElementById('noDataMessage').style.display = 'none';
+            document.getElementById('downloadBtn').style.display = 'inline-block';
+            document.getElementById('printBtn').style.display = 'inline-block';
+
+            // Update summary card
+            document.getElementById('summaryName').textContent = data.firstName + ' ' + data.lastName;
+            document.getElementById('summaryDepartment').textContent = data.department;
+            document.getElementById('summaryEmail').textContent = data.email;
+            document.getElementById('summaryPhone').textContent = data.phone;
+            document.getElementById('summaryPosition').textContent = data.position;
+            document.getElementById('summaryStartDate').textContent = new Date(data.startDate).toLocaleDateString();
+            document.getElementById('summaryManager').textContent = data.manager || 'Not specified';
+
+            // Update progress
+            const checkboxes = document.querySelectorAll('.checklist-checkbox');
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const percentage = Math.round((checked / total) * 100);
+
+            document.getElementById('summaryChecked').textContent = checked + '/' + total;
+            document.getElementById('summaryProgress').textContent = percentage + '%';
+
+            const summaryProgressBar = document.getElementById('summaryProgressBar');
+            summaryProgressBar.style.width = percentage + '%';
+            summaryProgressBar.textContent = percentage + '%';
+
+            document.getElementById('checklistSummaryText').textContent = `You have completed ${checked} out of ${total} onboarding tasks (${percentage}%).`;
+        }
+
+        function downloadSummary() {
+            const employeeData = JSON.parse(localStorage.getItem('employeeData'));
+            const checkboxes = document.querySelectorAll('.checklist-checkbox');
+            const tasks = {};
+            checkboxes.forEach(cb => {
+                tasks[cb.dataset.task] = cb.checked;
+            });
+
+            let content = 'EMPLOYEE ONBOARDING SUMMARY\n';
+            content += '========================================\n\n';
+            content += `Name: ${employeeData.firstName} ${employeeData.lastName}\n`;
+            content += `Email: ${employeeData.email}\n`;
+            content += `Phone: ${employeeData.phone}\n`;
+            content += `Position: ${employeeData.position}\n`;
+            content += `Department: ${employeeData.department}\n`;
+            content += `Start Date: ${employeeData.startDate}\n`;
+            content += `Manager: ${employeeData.manager}\n`;
+            content += `\nCHECKLIST ITEMS:\n`;
+            content += '----------------------------------------\n';
+            
+            Object.keys(tasks).forEach(key => {
+                const status = tasks[key] ? '✓ COMPLETED' : '○ PENDING';
+                content += `${status}\n`;
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', `onboarding-summary-${employeeData.firstName}-${employeeData.lastName}.txt`);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function printSummary() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
