@@ -378,6 +378,22 @@
 </mso:CustomDocumentProperties>
 </xml><![endif]-->
 </head>
+
+<style>
+
+.section-header {
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            list-style: none;
+        }
+
+</style>
+
 <body>
     <div class="container">
         <div class="header">
@@ -491,78 +507,145 @@
                     <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
                 </div>
 
-                <div class="info-box">
-                    <h4>📋 Complete Your Onboarding</h4>
-                    <p>Check off each item as you complete it. Your progress will be saved automatically.</p>
-                </div>
+                <!--Fingerprinting-->
+            <li class="section-header">Fingerprinting & Identification</li>
+            
+             <li class = "checklist-item">
+                        <input type="checkbox" class="checklist-checkbox">
+                        <span class="task-text">Fingerprinting completed</span>
+                    </li>
 
-                <ul class="checklist" id="checklistItems">
+            <li class="checklist">
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="welcome-meeting">
-                        <span class="task-text">Welcome Meeting with Manager</span>
+                        <input type="checkbox" class="checklist-checkbox">
+                        <span class="task-text">Clearance printed</span>
                     </li>
+
+            <li class="checklist">
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="it-setup">
+                        <input type="checkbox" class="checklist-checkbox">
+                        <span class="task-text">TEACH ID</span>
+                    </li>
+
+            <li class="checklist">
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox">
+                        <span class="task-text">WinCap EE ID</span>
+                    </li>
+
+            <!-- Onboarding -->
+                <li class="section-header">Onboarding<li>
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox">
+                        <span class="task-text">Approved Offer from Director of HR</span>
+                    </li>
+                <li class="checklistItems">
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox">
+                        <span class="task-text">Personnel Appointment Form</span>
+                    </li>
+
+                    <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox">
                         <div>
-                            <span class="task-text">IT Setup & Equipment</span>
-                            <div class="task-description">Laptop, phone, access cards, etc.</div>
+                            <span class="task-text">Email - Welcome to BOCES Onhoarding</span>
+                            <div class="task-description">Application and Supplement if not already on file</div>
                         </div>
                     </li>
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="account-access">
+                        <input type="checkbox" class="checklist-checkbox">
                         <div>
-                            <span class="task-text">Account Access & Permissions</span>
-                            <div class="task-description">Email, systems, tools, and software</div>
+                            <span class="task-text">I-9 (Employment Eligibility) </span>
+                            <div class="task-description">W-4 (Federal Withholding)</div>
                         </div>
                     </li>
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="tour-facilities">
+                        <input type="checkbox" class="checklist-checkbox">
                         <div>
-                            <span class="task-text">Office Tour</span>
-                            <div class="task-description">Building orientation and facilities</div>
+                            <span class="task-text">IT-2104 (State Withholding)</span>
+                            <div class="task-description">Retirement Information Request</div>
                         </div>
                     </li>
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="team-intro">
+                        <input type="checkbox" class="checklist-checkbox">
                         <div>
-                            <span class="task-text">Team Introduction</span>
-                            <div class="task-description">Meet your team members and colleagues</div>
+                            <span class="task-text">Retirement Application, if applicable</span>
+                            <div class="task-description">Direct Deposit Authorization, if applicable</div>
                         </div>
                     </li>
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="hr-paperwork">
+                        <input type="checkbox" class="checklist-checkbox">
                         <div>
-                            <span class="task-text">HR Paperwork & Benefits</span>
-                            <div class="task-description">Forms, benefits enrollment, policies</div>
+                            <span class="task-text">Sick Leave Bank Enrollment Form</span>
+                            <div class="task-description">Pay Choice Options, if applicable</div>
                         </div>
                     </li>
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="training-session">
+                        <input type="checkbox" class="checklist-checkbox">
                         <div>
-                            <span class="task-text">Initial Training Session</span>
-                            <div class="task-description">Company overview and role-specific training</div>
+                            <span class="task-text">Internet Use Form 5261</span>
+                            <div class="task-description">Oath of Allegiance</div>
                         </div>
                     </li>
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="policy-review">
+                        <input type="checkbox" class="checklist-checkbox">
                         <div>
-                            <span class="task-text">Review Company Policies</span>
-                            <div class="task-description">Employee handbook and compliance</div>
+                            <span class="task-text">Verification of Prior Tenure, if applicable</span>
+                        </div>
+                    </li>
+
+            <!-- Insurance -->
+                     <li class="section-header">Insurance</li>
+                            <span class="task-text">Health Insurance - Enrollment or Declination</span>
+                            <div class="task-description">Dental Insurance - Enrollment or Declination</div>
                         </div>
                     </li>
                     <li class="checklist-item">
-                        <input type="checkbox" class="checklist-checkbox" data-task="goal-setting">
+                        <input type="checkbox" class="checklist-checkbox">
                         <div>
-                            <span class="task-text">30-Day Goals & Expectations</span>
-                            <div class="task-description">Review goals with your manager</div>
+                            <span class="task-text">Dependent Verification</span>
+                            <div class="task-description">403(b) info (insurance buyout)</div>
+                        </div>
+                    </li>
+
+            <!-- Communication -->
+            <li class="section-header">Communication</li>
+                <li class="checklist-item">
+                        <input type="checkbox" class="checklist-checkbox">
+                        <div>
+                            <span class="task-text">Email/ID Badge/Helpdesk</span>
+                            <div>
+
+                            <span class="task-description">Start Date Approval Communication</div>
                         </div>
                     </li>
                     <li class="checklist-item">
                         <input type="checkbox" class="checklist-checkbox" data-task="first-week-meeting">
                         <div>
-                            <span class="task-text">First Week Check-in</span>
-                            <div class="task-description">Follow-up meeting with manager</div>
-                        </div>
+
+            <!-- One week before start date -->
+              <li class="section-header">One week before start date</li>
+                <li class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox">
+                        <div>
+                            <span class="task-text"> Email - Welcome to W-FL BOCES!
+                                (Login info, Employee Portal.
+                                WinCapWeb, Calendars, Payroll Doles,
+                                Holidays & Instructional Calendar.
+                                Code of Conduct, W-FL BOCES Sites & Directions.
+                                HR Contact Info, Emergency Closing Info) </span>
+                         </div>
+                    </li>
+
+                     <!-- Two weeks after start date -->
+                       <li class="section-header">Two weeks after start date</li>
+                       <li class = "checklist-item">
+                        <input type = "checkbox" class = "checklist-checkbox">
+                           
+                             <span class="task-text"> Email - Checking-In Post-Onboarding
+                                (Professional Development,
+                                Employee Offers and Discounts,
+                                Need a Form?, W-FL BOCES News, Job Opportunities) </span>
                     </li>
                 </ul>
 
@@ -578,6 +661,7 @@
 
                 <div class="info-box">
                     <h4>📚 Helpful Materials</h4>
+                    --Put resources here--
                     <p>Here are some resources to help you get started and familiarize yourself with our company.</p>
                 </div>
 
@@ -682,6 +766,7 @@
     </div>
 
     <script>
+
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             loadData();

@@ -1,0 +1,23 @@
+EMPLOYEE ONBOARDING SUMMARY
+========================================
+
+Name: Elaina Flynn
+Email: elaina.flynn@wflboces.org
+Phone: 1231231234
+Position: HR Assistant
+Department: hr
+Start Date: 2026-05-08
+Manager: Test Manager
+
+CHECKLIST ITEMS:
+----------------------------------------
+✓ COMPLETED
+✓ COMPLETED
+✓ COMPLETED
+✓ COMPLETED
+✓ COMPLETED
+✓ COMPLETED
+✓ COMPLETED
+✓ COMPLETED
+✓ COMPLETED
+✓ COMPLETED
