@@ -4,6 +4,7 @@ The Employee Onboarding Portal is a responsive web-based application designed to
 
 The application is built using standard HTML and CSS, making it easy to customize for different organizational needs.
 
+
 **Features**
 
 Tabbed Navigation
@@ -21,6 +22,7 @@ Employment-related information
 Mobile-friendly layout
 
 Multi-field form layouts
+
 
 **Planned Backend Features**
 
